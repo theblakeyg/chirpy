@@ -31,9 +31,9 @@ func main() {
 	config.fileserverHits.Store(0)
 	handler := http.StripPrefix("/app", http.FileServer(http.Dir(filepathRoot)))
 	mux.Handle("/app/", config.middlewareMetricsInc(handler))
-	mux.HandleFunc("/healthz", health)
-	mux.HandleFunc("/metrics", config.metrics)
-	mux.HandleFunc("/reset", config.reset)
+	mux.HandleFunc("GET /healthz", health)
+	mux.HandleFunc("GET /metrics", config.metrics)
+	mux.HandleFunc("POST /reset", config.reset)
 
 	server := &http.Server{
 		Addr:    port,
